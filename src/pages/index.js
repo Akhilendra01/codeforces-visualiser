@@ -32,8 +32,7 @@ export default function Home() {
   async function sendReq() {
     let user = inputUserName.current.value;
     inputUserName.current.value = '';
-    console.log(process.env.NEXT_PUBLIC_URL);
-
+    
     await fetch(`${process.env.NEXT_PUBLIC_URL}user.info?handles=${user}`)
       .then(response => {
         if (response.status == 200) {
