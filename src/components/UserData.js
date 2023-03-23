@@ -50,8 +50,7 @@ export default function UserData(props) {
                     <UserDetailRow property={`Location`} value={`${userData.city}, ${userData.country}`} />
                 </Grid>
             </Box>}
-
-            
+                        
         </>
     );
 }

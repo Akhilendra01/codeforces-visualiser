@@ -93,36 +93,6 @@ export default function TagChart(props) {
             backgroundColor: ["green", "red"]
         }]
     }
-    const options = {
-        scales: {
-            xAxes: [
-                {
-                    ticks: {
-                        beginAtZero: true,
-                        autoSkip: false,
-                        minRotation: 90,
-                        maxRotation: 90
-                    },
-                    scaleLabel: {
-                        display: true,
-                        labelString: 'Problems'
-                    }
-                }
-            ],
-            yAxes: [
-                {
-                    ticks: {
-                        beginAtZero: true
-                    },
-                    scaleLabel: {
-                        display: true,
-                        labelString: 'Topics'
-                    }
-                }
-            ]
-        }
-    };
-
     return (
         <>
             <Box className={classes.tagChartContainer}>
