@@ -25,7 +25,20 @@ const useStyles = makeStyles({
         marginBlock: "0px",
         justifyContent: "center",
         alignItems: "center",
-        paddingBlock: "20px"
+        paddingBlock: "20px",
+        margrinBlock:"15px"
+    },
+
+    "@media(max-width: 800px)":{
+        tagChartContainer:{
+            width: "100%",
+
+            marginInline:"0"
+        },
+        pieChartContainer:{
+            width: "60%",
+            flexDirection:"column"
+        }
     }
 });
 
@@ -80,12 +93,40 @@ export default function TagChart(props) {
             backgroundColor: ["green", "red"]
         }]
     }
-
+    const options = {
+        scales: {
+            xAxes: [
+                {
+                    ticks: {
+                        beginAtZero: true,
+                        autoSkip: false,
+                        minRotation: 90,
+                        maxRotation: 90
+                    },
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Problems'
+                    }
+                }
+            ],
+            yAxes: [
+                {
+                    ticks: {
+                        beginAtZero: true
+                    },
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Topics'
+                    }
+                }
+            ]
+        }
+    };
 
     return (
         <>
             <Box className={classes.tagChartContainer}>
-                <Bar data={chartInput} />
+                <Bar data={chartInput} options={options}/>
             </Box>
             <Box className={classes.pieChartContainer}>
                 <Pie data={pie} />

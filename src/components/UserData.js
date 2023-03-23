@@ -20,7 +20,7 @@ const useStyles = makeStyles({
     "@media(max-width: 800px)": {
         userDetailsContainer: {
             flexDirection: "column",
-            marginInline: "15px"
+            marginInline: "5px"
         },
         grid: {
             width: "100%",
