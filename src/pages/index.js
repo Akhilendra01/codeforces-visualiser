@@ -1,10 +1,10 @@
-import { Box, Button, Input } from "@mui/material"
-
-import { makeStyles } from "@mui/styles"
-
+import { Box, Button, Input, Typography } from "@mui/material";
+import { Grid } from "@mui/material";
+import { makeStyles } from "@mui/styles";
 import { useState, useRef } from 'react';
 
-import Image from "next/image";
+import UserData from "@/components/UserData";
+import TagChart from "@/components/TagChart";
 
 const useStyles = makeStyles({
   container: {
@@ -16,14 +16,17 @@ const useStyles = makeStyles({
   },
   userInput: {
     fontSize: "20px"
-  }
+  },
+
 })
 
 export default function Home() {
   const classes = useStyles();
 
-  const [userData, setUserData] = useState({});
-  const [userProblems, setUserProblems] = useState({});
+  const [userData, setUserData] = useState(null);
+  const [userProblems, setUserProblems] = useState(null);
+  const [errorMessage, setErrorMessage] = useState(null);
+
   const inputUserName = useRef('');
 
   async function sendReq() {
@@ -32,15 +35,32 @@ export default function Home() {
     console.log(process.env.NEXT_PUBLIC_URL);
 
     await fetch(`${process.env.NEXT_PUBLIC_URL}user.info?handles=${user}`)
-      .then(response => response.json())
-      .then(data => data.result[0])
+      .then(response => {
+        if (response.status == 200) {
+          setErrorMessage(null);
+          return response.json();
+        }
+        setErrorMessage(`Username "${user}" not found`);
+        return null;
+      })
+      .then(data => {
+        if (data) return data.result[0];
+        return null;
+      })
       .then(data => {
         setUserData(data);
       });
+
     await fetch(`${process.env.NEXT_PUBLIC_URL}user.status?handle=${user}`)
-      .then(async response => await response.json())
-      .then(async data => data.result)
-      .then(async problems => {
+      .then(response => {
+        if (response.status == 200) return response.json();
+        return null;
+      })
+      .then(data => {
+        if (data) return data.result;
+        return null;
+      })
+      .then(problems => {
         setUserProblems(problems);
       });
   }
@@ -48,11 +68,12 @@ export default function Home() {
   return (
     <>
       <Box className={classes.container}>
-        <Input className={classes.userInput} inputRef={inputUserName} />
+        <Input className={classes.userInput} inputRef={inputUserName} placeholder="Enter username"/>
         <Button onClick={sendReq}>Search</Button>
+        {errorMessage && <Typography variant="h6">{errorMessage}</Typography>}
       </Box>
-
-      <Image src={userData.titlePhoto} alt="bcd"/>
+      {userData && <UserData userData={userData} />}
+      {userProblems && <TagChart userProblems={userProblems}/>}
     </>
   )
 }
