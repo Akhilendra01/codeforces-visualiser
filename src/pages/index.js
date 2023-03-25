@@ -89,7 +89,7 @@ export default function Home() {
       </Box>
       {userData && <UserData userData={userData} />}
       {userProblems && <TagChart userProblems={userProblems}/>}
-      {userRatings && <RatingsChart userRatings={userRatings} name={`${userData.firstName} ${userData.lastName}`}/>}
+      {userRatings && userData && <RatingsChart userRatings={userRatings} name={`${userData.firstName} ${userData.lastName}`}/>}
     </>
   )
 }
