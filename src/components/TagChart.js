@@ -96,6 +96,7 @@ export default function TagChart(props) {
     return (
         <>
             <Box className={classes.tagChartContainer}>
+                <Typography variant="h6">Tag Chart</Typography>
                 <Bar data={chartInput}/>
             </Box>
             <Box className={classes.pieChartContainer}>

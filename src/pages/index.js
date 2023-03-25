@@ -5,6 +5,7 @@ import { useState, useRef } from 'react';
 
 import UserData from "@/components/UserData";
 import TagChart from "@/components/TagChart";
+import RatingsChart from "@/components/RatingsChart";
 
 const useStyles = makeStyles({
   container: {
@@ -25,6 +26,7 @@ export default function Home() {
 
   const [userData, setUserData] = useState(null);
   const [userProblems, setUserProblems] = useState(null);
+  const [userRatings, setUserRatings] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
 
   const inputUserName = useRef('');
@@ -62,6 +64,20 @@ export default function Home() {
       .then(problems => {
         setUserProblems(problems);
       });
+
+    await fetch(`${process.env.NEXT_PUBLIC_URL}user.rating?handle=${user}`)
+      .then(response => {
+        if (response.status == 200) return response.json();
+        return null;
+      })
+      .then(data => {
+        if (data) return data.result;
+        return null;
+      })
+      .then(ratings => {
+        console.log(ratings);
+        setUserRatings(ratings);
+      });
   }
 
   return (
@@ -73,6 +89,7 @@ export default function Home() {
       </Box>
       {userData && <UserData userData={userData} />}
       {userProblems && <TagChart userProblems={userProblems}/>}
+      {userRatings && <RatingsChart userRatings={userRatings} name={`${userData.firstName} ${userData.lastName}`}/>}
     </>
   )
 }
