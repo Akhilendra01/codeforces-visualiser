@@ -28,9 +28,9 @@ const useStyles = makeStyles({
 export default function RatingsChart(props){
     const classes=useStyles();
     const userRatings=props.userRatings;
-
+    let c=0;
     const data={
-        labels:userRatings.map(rating=> rating.contestId),
+        labels:userRatings.map(rating=> ++c),
         datasets:[{
             label: props.name,
             data: userRatings.map(rating=> rating.newRating),
