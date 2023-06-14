@@ -2,7 +2,6 @@ import { Box, Button, Input, Typography } from "@mui/material";
 import { Grid } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { useState, useRef } from 'react';
-
 import UserData from "@/components/UserData";
 import TagChart from "@/components/TagChart";
 import RatingsChart from "@/components/RatingsChart";
